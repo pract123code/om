@@ -1,0 +1,62 @@
+import java.util.Scanner;
+
+public class CollegeChatBot {
+
+    public static void main(String args[]) {
+
+        Scanner sc = new Scanner(System.in);
+
+        String message;
+
+        
+
+        System.out.println("===== College ChatBot =====");
+        System.out.println("Type 'bye' to exit");
+
+        while(true) {
+
+            System.out.print("\nYou: ");
+            message = sc.nextLine();
+
+            message = message.toLowerCase();
+
+            if(message.equals("hello")) {
+
+                System.out.println("Bot: Welcome to ABC College.");
+
+            }
+            else if(message.equals("courses")) {
+
+                System.out.println("Bot: We offer BCA, BBA, Engineering and MBA.");
+
+            }
+            else if(message.equals("fees")) {
+
+                System.out.println("Bot: Fees start from Rs.50,000 per year.");
+
+            }
+            else if(message.equals("admission")) {
+
+                System.out.println("Bot: Admission process is currently open.");
+
+            }
+            else if(message.equals("contact")) {
+
+                System.out.println("Bot: Contact number is 9876543210.");
+
+            }
+            else if(message.equals("bye")) {
+
+                System.out.println("Bot: Thank You for visiting.");
+
+                break;
+            }
+            else {
+
+                System.out.println("Bot: Sorry, I don't understand.");
+            }
+        }
+
+        sc.close();
+    }
+}
