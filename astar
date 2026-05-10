@@ -1,0 +1,98 @@
+import java.util.Scanner;
+
+public class AStarSimple {
+
+    public static void main(String[] args) {
+
+        Scanner sc = new Scanner(System.in);
+
+        System.out.print("Enter number of nodes: ");
+        int n = sc.nextInt();
+
+        String[] nodes = new String[n];
+
+        // Input node names
+        for(int i = 0; i < n; i++) {
+            System.out.print("Enter node name: ");
+            nodes[i] = sc.next();
+        }
+
+        // Adjacency matrix
+        int[][] cost = new int[n][n];
+
+        System.out.println("Enter cost matrix:");
+
+        for(int i = 0; i < n; i++) {
+            for(int j = 0; j < n; j++) {
+                cost[i][j] = sc.nextInt();
+            }
+        }
+
+        // Heuristic values
+        int[] h = new int[n];
+
+        for(int i = 0; i < n; i++) {
+            System.out.print("Enter heuristic h(n) for " + nodes[i] + ": ");
+            h[i] = sc.nextInt();
+        }
+
+        System.out.print("Enter start node index: ");
+        int start = sc.nextInt();
+
+        System.out.print("Enter goal node index: ");
+        int goal = sc.nextInt();
+
+        int current = start;
+
+        boolean[] visited = new boolean[n];
+
+        System.out.print("\nPath: ");
+        System.out.print(nodes[current]);
+
+        int totalCost = 0;
+
+        while(current != goal) {
+
+            visited[current] = true;
+
+            int minF = Integer.MAX_VALUE;
+            int next = -1;
+
+            for(int i = 0; i < n; i++) {
+
+                if(cost[current][i] > 0 && !visited[i]) {
+
+                    int g = cost[current][i];
+                    int f = g + h[i];
+
+                    System.out.println(
+                        "\nChecking Node: " + nodes[i] +
+                        " g(n)=" + g +
+                        " h(n)=" + h[i] +
+                        " f(n)=" + f
+                    );
+
+                    if(f < minF) {
+                        minF = f;
+                        next = i;
+                    }
+                }
+            }
+
+            if(next == -1) {
+                System.out.println("\nNo Path Found");
+                return;
+            }
+
+            totalCost += cost[current][next];
+
+            current = next;
+
+            System.out.print(" -> " + nodes[current]);
+        }
+
+        System.out.println("\nTotal Cost: " + totalCost);
+
+        sc.close();
+    }
+}
