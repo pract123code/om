@@ -1,0 +1,70 @@
+public class Graph {
+
+    static int[][] adj = new int[6][6];
+
+    static void addEdge(int a, int b) {
+        adj[a][b] = 1;
+        adj[b][a] = 1;
+    }
+
+    // DFS Recursive
+    static void dfs(int node, boolean[] visited) {
+        if (visited[node]) 
+            return;
+        visited[node] = true;
+        System.out.print(node + " ");
+
+        for (int i = 0; i < 6; i++) {
+            if (adj[node][i] == 1 && !visited[i]) {
+                dfs(i, visited);
+            }
+        }
+    }
+
+    // BFS Recursive
+    static void bfs(int[] queue, int front, int back, boolean[] visited) {
+        if (front == back) return;
+        int node = queue[front];
+        System.out.print(node + " ");
+
+        for (int i = 0; i < 6; i++) {
+            if (adj[node][i] == 1 && !visited[i]) {
+                visited[i] = true;
+                queue[back++] = i;
+            }
+        }
+        bfs(queue, front + 1, back, visited);
+    }
+
+    // ─────────────────────────────────────
+    // Simple BFS starter method
+    // just call startBFS(0) — that's it!
+    // ─────────────────────────────────────
+    static void startBFS(int startNode) {
+        boolean[] visited = new boolean[6];
+        int[]     queue   = new int[6];
+        visited[startNode] = true;   // mark start
+        queue[0]           = startNode; // put in queue
+        bfs(queue, 0, 1, visited);   // begin
+    }
+
+    public static void main(String[] args) {
+
+        // Build graph
+        addEdge(0, 1);
+        addEdge(0, 2);
+        addEdge(1, 3);
+        addEdge(1, 4);
+        addEdge(2, 5);
+
+        // DFS — just pass start node
+        System.out.print("DFS: ");
+        dfs(0, new boolean[6]);
+        System.out.println();
+
+        // BFS — just pass start node
+        System.out.print("BFS: ");
+        startBFS(0);
+        System.out.println();
+    }
+}
