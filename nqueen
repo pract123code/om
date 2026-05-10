@@ -1,0 +1,98 @@
+public class NQueens {
+
+    static int n = 4;
+
+    static int board[][] = new int[n][n];
+
+    // Check safe position
+    static boolean isSafe(int row, int col) {
+
+        // Check left side
+        for(int i = 0; i < col; i++) {
+
+            if(board[row][i] == 1) {
+
+                return false;
+            }
+        }
+
+        // Check upper diagonal
+        for(int i = row, j = col; i >= 0 && j >= 0; i--, j--) {
+
+            if(board[i][j] == 1) {
+
+                return false;
+            }
+        }
+
+        // Check lower diagonal
+        for(int i = row, j = col; i < n && j >= 0; i++, j--) {
+
+            if(board[i][j] == 1) {
+
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    // Solve N Queens
+    static boolean solve(int col) {
+
+        // All queens placed
+        if(col >= n) {
+
+            return true;
+        }
+
+        // Try every row
+        for(int i = 0; i < n; i++) {
+
+            if(isSafe(i, col)) {
+
+                // Place queen
+                board[i][col] = 1;
+
+                // Recursive call
+                if(solve(col + 1)) {
+
+                    return true;
+                }
+
+                // Backtracking
+                board[i][col] = 0;
+            }
+        }
+
+        return false;
+    }
+
+    // Print solution
+    static void printBoard() {
+
+        for(int i = 0; i < n; i++) {
+
+            for(int j = 0; j < n; j++) {
+
+                System.out.print(board[i][j] + " ");
+            }
+
+            System.out.println();
+        }
+    }
+
+    public static void main(String args[]) {
+
+        if(solve(0)) {
+
+            System.out.println("Solution Found:\n");
+
+            printBoard();
+        }
+        else {
+
+            System.out.println("No Solution");
+        }
+    }
+}
